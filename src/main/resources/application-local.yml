@@ -1,0 +1,64 @@
+env:
+  name: local
+
+spring:
+  config:
+    activate:
+      on-profile: ${env.name}
+  cloud:
+    stream:
+      rabbit:
+        bindings:
+          billkeyRegister-out-0:
+            producer:
+              exchange-type: topic
+          billkeyRemove-out-0:
+            producer:
+              exchange-type: topic
+          billingApproval-out-0:
+            producer:
+              exchange-type: topic
+          billingCancel-out-0:
+            producer:
+              exchange-type: topic
+      bindings:
+        billkeyRegister-out-0:
+          binder: rabbit
+          destination: nicepay.billkeyRegister.${env.name}
+          contentType: application/json
+        billkeyRemove-out-0:
+          binder: rabbit
+          destination: nicepay.billkeyRemove.${env.name}
+          contentType: application/json
+        billingApproval-out-0:
+          binder: rabbit
+          destination: nicepay.billingApproval.${env.name}
+          contentType: application/json
+        billingCancel-out-0:
+          binder: rabbit
+          destination: nicepay.billingCancel.${env.name}
+          contentType: application/json
+  rabbitmq:
+    host: 13.125.243.172
+    port: 5672
+    username: wadiz
+    password: wadiz
+    virtual: /
+  r2dbc:
+    url: r2dbc:mysql://127.0.0.1:3307/wadiz_payment_dev?useUnicode=true&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Seoul&tlsVersion=TLSv1.2&tcpKeepAlive=true
+    username: admin
+    password: W!diz2015#1
+    pool:
+      enabled: true
+      initial-size: 50
+      max-size: 100
+      max-idle-time: 30000
+
+wadiz:
+  service:
+    store_auth:
+      mid: nicepay00m
+      merchantKey: EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==
+    funding:
+      mid: nictest04m
+      merchantKey: b+zhZ4yOZ7FsH8pm5lhDfHZEb79tIwnjsdA0FBXh86yLc6BJeFVrZFXhAoJ3gEWgrWwN+lJMV0W4hvDdbe4Sjw==

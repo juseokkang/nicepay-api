@@ -1,0 +1,13 @@
+server:
+  port: 9000
+  shutdown: graceful
+
+spring:
+  freemarker:
+    cache: false
+
+nicepay:
+  billing:
+    url: https://webapi.nicepay.co.kr/webapi/
+  interest:
+    url: https://data.nicepay.co.kr/mi/api/
